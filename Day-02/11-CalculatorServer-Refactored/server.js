@@ -6,10 +6,13 @@ var http = require('http'),
 
 
 var server = http.createServer(function(req, res){
-	dataParser(req);
-	staticServer(req, res);
-	calculatorHandler(req, res);
-	notFoundHandler(res);
+	dataParser(req, res, function(){
+		staticServer(req, res, function(){
+			calculatorHandler(req, res, function(){
+				notFoundHandler(req, res);
+			})
+		})
+	})
 });
 
 server.listen(8080);
