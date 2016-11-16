@@ -30,10 +30,8 @@ module.exports = function(req, res, next){
 				res.end();
 			}
 		});
-		console.log('end of staticServer');
+		
 	} else {
-		if (typeof next === 'function'){
-			next();
-		}
+		next();
 	}
 }

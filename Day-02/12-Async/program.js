@@ -58,13 +58,17 @@ function f4Async(next){
 var asyncFns = [f1Async, f2Async, f3Async, f4Async];
 
 module.exports.runAsync = function(){
-	f1Async(function(){
-		f2Async(function(){
-			f3Async(function(){
-				f4Async();
-			});
-		});
-	});
+	
+	function exec(asyncFns){
+		var first = asyncFns[0],
+			remaining = asyncFns.slice(1)
+			next = function(){
+				exec(remaining);
+			};
+			if (first)
+				first(next);
+	}
+	exec(asyncFns);
 }
 
 
