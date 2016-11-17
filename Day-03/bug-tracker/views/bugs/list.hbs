@@ -1,3 +1,38 @@
+<style>
+	.closed{
+		color : red;
+		text-decoration: line-through;
+		font-style: italic;
+		font-weight: bold;
+	}
+	form{
+		display: inline;
+	}
+</style>
+<script>
+
+</script>
 <h1>Bug Tracker</h1>
 <hr>
-<div>{{this.list}}</div>
+<ol>
+	{{#each list}}
+		{{#if this.isClosed}}
+			<li class="closed">
+		{{else}}
+			<li>
+		{{/if}}
+			<span>{{this.name}}</span>
+			<span>
+				<form method="post" action="/bugs/toggle/{{this.id}}" id="form-{{this.id}}">
+					<a href="#" onclick="document.getElementById('form-{{this.id}}').submit()">X</a>
+				</form>
+			</span>
+		</li>
+	{{/each}}
+</ol>
+<a href="/bugs/new">Create New</a>
+<form method="post" action="/bugs/removeClosed">
+	<input type="submit" value="Remove Closed">
+</form>
+
+
