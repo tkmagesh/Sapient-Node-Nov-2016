@@ -1,4 +1,5 @@
 var querystring = require('querystring'),
+	memoize = require('./memoize'),
 	calculator = require('./calculator');
 
 module.exports = function(req, res, next){
@@ -8,7 +9,7 @@ module.exports = function(req, res, next){
 			arg1 = parseInt(calcData.n1, 10),
 			arg2 = parseInt(calcData.n2, 10);
 
-		var result = calculator[operation](arg1, arg2);
+		var result = calculate(operation, arg1, arg2)
 		res.write(result.toString());
 		res.end();
 		//calculator operation requested
@@ -17,3 +18,8 @@ module.exports = function(req, res, next){
 	}
 	
 }
+
+var calculate = memoize(function(operation, n1, n2){
+	console.log('triggering calculator for ', arguments);
+	return calculator[operation](n1, n2);
+});
