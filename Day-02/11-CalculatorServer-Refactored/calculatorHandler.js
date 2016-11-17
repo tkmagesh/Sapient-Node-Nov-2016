@@ -20,6 +20,5 @@ module.exports = function(req, res, next){
 }
 
 var calculate = memoize(function(operation, n1, n2){
-	console.log('triggering calculator for ', arguments);
 	return calculator[operation](n1, n2);
 });
